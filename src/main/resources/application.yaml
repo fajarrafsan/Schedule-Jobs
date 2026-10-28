@@ -13,4 +13,11 @@ spring:
       ddl-auto: update
     show-sql: true
 
+  batch:
+    scheduler:
+      interval-seconds: 60
+    retry:
+      max-attempts: 3
+      initial-delay-ms: 1000
+      multiplier: 2.0
 
