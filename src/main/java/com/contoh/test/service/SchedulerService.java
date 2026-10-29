@@ -18,7 +18,7 @@ public class SchedulerService {
     private final Scheduler scheduler;
     private final int intervalSeconds;
 
-    public SchedulerService(Scheduler scheduler, @Value("${batch.scheduler.interval-seconds:60") int intervalSeconds) {
+    public SchedulerService(Scheduler scheduler, @Value("${batch.scheduler.interval-seconds:60}") int intervalSeconds) {
         this.scheduler = scheduler;
         this.intervalSeconds = intervalSeconds;
     }

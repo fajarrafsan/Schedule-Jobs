@@ -17,6 +17,7 @@ public class BatchJobsRequest {
     @Size(max = 100,message = "JobName Max 100 character")
     private String jobName;
 
+    @NotBlank(message = "jobType is required")
     @Size(max = 50, message = "jobType max 500 character")
     private String jobType;
 
