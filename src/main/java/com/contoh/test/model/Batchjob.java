@@ -20,7 +20,7 @@ public class Batchjob {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     private String jobName;
 
     @Column(length = 50)

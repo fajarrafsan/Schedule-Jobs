@@ -4,6 +4,7 @@ import com.contoh.test.dto.BatchJobResponse;
 import com.contoh.test.dto.BatchJobsRequest;
 import com.contoh.test.dto.BatchJobsSearchCriteria;
 import com.contoh.test.dto.PageResponse;
+import com.contoh.test.exception.DuplikatResourceException;
 import com.contoh.test.exception.ResourceNotFoundException;
 import com.contoh.test.model.Batchjob;
 import com.contoh.test.model.Status;
@@ -28,6 +29,11 @@ public class BatchJobsService {
     }
 
     public BatchJobResponse create(BatchJobsRequest request) {
+        String jobName = request.getJobName().trim();
+        if (batchJobsRepository.existsByJobNameIgnoreCase(jobName)) {
+            throw new DuplikatResourceException("BatchJob dengan nama '" + jobName + "' sudah ada");
+        }
+
         Batchjob batchjob = Batchjob.builder()
                 .jobName(request.getJobName().trim())
                 .jobType(request.getJobType())
@@ -46,6 +52,11 @@ public class BatchJobsService {
 
     public BatchJobResponse update(BatchJobsRequest request, long id) {
         Batchjob existingBatchjob = batchJobsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No BatchJob found with id " + id));
+
+        String jobName = request.getJobName().trim();
+        if (batchJobsRepository.existsByJobNameIgnoreCaseAndIdNot(jobName, id)) {
+            throw new DuplicateResourceException("BatchJob dengan nama '" + jobName + "' sudah ada");
+        }
 
         if (request.getStatus() != null) {
             if (request.getStatus() == Status.ACTIVE && existingBatchjob.getStatus() == Status.INACTIVE) {

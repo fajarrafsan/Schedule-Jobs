@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface BatchJobsRepository extends JpaRepository<Batchjob, Long> {
     List<Batchjob> findByStatus(Status status);
+    boolean existsByJobNameIgnoreCase(String jobName);
+    boolean existsByJobNameIgnoreCaseAndIdNot(String jobName, Long id);
 }

@@ -1,5 +1,6 @@
 package com.contoh.test.exception;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -39,6 +40,15 @@ public class GlobalExceptionHandler {
         return build(HttpStatus.BAD_REQUEST, "Request body tidak valid (cek format JSON / nilai status)");
     }
 
+    @ExceptionHandler(DuplikatResourceException.class)
+    public ResponseEntity<Map<String, Object>> handleDuplikatResourceException(DuplikatResourceException ex) {
+        return build(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Map<String, Object>> handleDataConflict(DataIntegrityViolationException ex) {
+        return build(HttpStatus.CONFLICT, "Data bentrok dengan data yang sudah ada");
+    }
 
     private ResponseEntity<Map<String, Object>> build(HttpStatus status, String message) {
         Map<String, Object> body = new LinkedHashMap<>();
