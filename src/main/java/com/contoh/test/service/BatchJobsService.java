@@ -4,7 +4,7 @@ import com.contoh.test.dto.BatchJobResponse;
 import com.contoh.test.dto.BatchJobsRequest;
 import com.contoh.test.dto.BatchJobsSearchCriteria;
 import com.contoh.test.dto.PageResponse;
-import com.contoh.test.exception.DuplikatResourceException;
+import com.contoh.test.exception.DuplicateResourceException;
 import com.contoh.test.exception.ResourceNotFoundException;
 import com.contoh.test.model.Batchjob;
 import com.contoh.test.model.Status;
@@ -13,7 +13,6 @@ import com.contoh.test.repository.BatchJobsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.module.ResolutionException;
 
 
 @Service
@@ -31,7 +30,7 @@ public class BatchJobsService {
     public BatchJobResponse create(BatchJobsRequest request) {
         String jobName = request.getJobName().trim();
         if (batchJobsRepository.existsByJobNameIgnoreCase(jobName)) {
-            throw new DuplikatResourceException("BatchJob dengan nama '" + jobName + "' sudah ada");
+            throw new DuplicateResourceException("BatchJob dengan nama '" + jobName + "' sudah ada");
         }
 
         Batchjob batchjob = Batchjob.builder()

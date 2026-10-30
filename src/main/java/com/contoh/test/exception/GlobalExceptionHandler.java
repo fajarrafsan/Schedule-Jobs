@@ -40,8 +40,8 @@ public class GlobalExceptionHandler {
         return build(HttpStatus.BAD_REQUEST, "Request body tidak valid (cek format JSON / nilai status)");
     }
 
-    @ExceptionHandler(DuplikatResourceException.class)
-    public ResponseEntity<Map<String, Object>> handleDuplikatResourceException(DuplikatResourceException ex) {
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<Map<String, Object>> handleDuplikatResourceException(DuplicateResourceException ex) {
         return build(HttpStatus.CONFLICT, ex.getMessage());
     }
 
